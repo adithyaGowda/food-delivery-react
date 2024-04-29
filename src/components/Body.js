@@ -1,24 +1,33 @@
 import RestaurantCard from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
+import { PROXY_URL, SWIGGY_URL } from "../utils/constants";
+import { Link } from "react-router-dom";
 
 const Body = () => {
+  //local state variable - super powerful
   const [listOfRestaurant, setListOfRestaurant] = useState([]);
+  const [filteredRestaurantList, setFilteredRestaurantList] = useState([]);
   const [searchText, setSearchText] = useState("");
+
+  //whenever state variables updates, react triggers a reconciliation cycle(re-renders the component)
+  console.log("body rendered");
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.96340&lng=77.58550&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-    );
+    const data = await fetch(SWIGGY_URL);
 
     const json = await data.json();
 
+    //optional chaining
     setListOfRestaurant(
-      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+    setFilteredRestaurantList(
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
   };
 
@@ -38,7 +47,11 @@ const Body = () => {
           />
           <button
             onClick={() => {
-              console.log(searchText);
+              const filteredList = listOfRestaurant.filter((list) =>
+                list.info.name.toLowerCase().includes(searchText.toLowerCase())
+              );
+
+              setFilteredRestaurantList(filteredList);
             }}
           >
             Search
@@ -50,15 +63,20 @@ const Body = () => {
             const filteredLIst = listOfRestaurant.filter(
               (res) => res.info.avgRating > 4.3
             );
-            setListOfRestaurant(filteredLIst);
+            setFilteredRestaurantList(filteredLIst);
           }}
         >
           Top Rated Restaurants
         </button>
       </div>
       <div className="res-container">
-        {listOfRestaurant.map((resData) => (
-          <RestaurantCard key={resData?.info?.id} resData={resData.info} />
+        {filteredRestaurantList.map((resData) => (
+          <Link
+            key={resData?.info?.id}
+            to={"/restaurants/" + resData?.info?.id}
+          >
+            <RestaurantCard resData={resData.info} />
+          </Link>
         ))}
       </div>
     </div>

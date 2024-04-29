@@ -1,14 +1,8 @@
 import { CDN_URL } from "../utils/constants";
 
 const RestaurantCard = ({ resData }) => {
-  const {
-    name,
-    cuisines,
-    avgRating,
-    costForTwo,
-    sla,
-    cloudinaryImageId,
-  } = resData;
+  const { name, cuisines, avgRating, costForTwo, sla, cloudinaryImageId } =
+    resData;
   return (
     <div className="res-card" style={{ backgroundColor: "#f0f0f0" }}>
       <img
@@ -20,9 +14,10 @@ const RestaurantCard = ({ resData }) => {
       <h4>{cuisines.join(", ")}</h4>
       <h4>⭐{avgRating}</h4>
       <h4>{costForTwo}</h4>
-      <h4>{sla?.deliveryTime} minutes</h4>
+      <h4>{sla?.slaString}</h4>
     </div>
   );
 };
 
 export default RestaurantCard;
+//implement lazy loading to fetch more restraunts on scrolling
