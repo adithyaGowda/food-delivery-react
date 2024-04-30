@@ -40,11 +40,24 @@ class UserClass extends React.Component {
 
     console.log("child render called");
     return (
-      <div className="user-card">
-        <img src={avatar_url} />
-        <h3>name: {name}</h3>
-        <h4>place: {location}</h4>
-        <h4>contact: @USER_CONTACT</h4>
+      <div className="ml-10 m-8 w-[700px] bg-gray-100 flex justify-between">
+        <div>
+          <img className="w-[100px] " src={avatar_url} />
+          <h3>name: {name}</h3>
+          <h4>place: {location}</h4>
+          <h4>contact: @USER_CONTACT</h4>
+        </div>
+        <div>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </div>
       </div>
     );
   }
