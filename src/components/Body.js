@@ -1,9 +1,10 @@
 import RestaurantCard, { withVegLable } from "./RestaurantCard";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { PROXY_URL, SWIGGY_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   //local state variable - super powerful
@@ -14,8 +15,10 @@ const Body = () => {
 
   const RestaurandCardVeg = withVegLable(RestaurantCard);
 
+  const { loggedUser, setUserName } = useContext(UserContext);
+
   //whenever state variables updates, react triggers a reconciliation cycle(re-renders the component)
-  console.log("body rendered");
+  // console.log("body rendered");
 
   useEffect(() => {
     fetchData();
@@ -50,7 +53,7 @@ const Body = () => {
         <div className="m-4 p-4">
           <input
             type="text"
-            className="border border-solid rounded-lg border-black"
+            className="border border-solid rounded-lg border-black p-1 m-1"
             value={searchText}
             onChange={(e) => {
               setSearchText(e.target.value);
@@ -82,6 +85,15 @@ const Body = () => {
             Top Rated Restaurants
           </button>
         </div>
+        <div className="flex items-center ml-8">
+          <label>UserName</label>
+          <input
+            className=" m-1 p-1 border rounded-lg border-black"
+            type="text"
+            value={loggedUser}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+        </div>
       </div>
       <div className="flex flex-wrap">
         {filteredRestaurantList.map((resData) => (
@@ -89,7 +101,6 @@ const Body = () => {
             key={resData?.info?.id}
             to={"/restaurants/" + resData?.info?.id}
           >
-            {" "}
             {resData?.info?.veg ? (
               <RestaurandCardVeg resData={resData.info} />
             ) : (

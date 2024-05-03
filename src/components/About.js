@@ -6,14 +6,14 @@ class About extends React.Component {
   constructor(props) {
     super(props);
 
-    console.log("parent constructor called");
+    // console.log("parent constructor called");
   }
   componentDidMount() {
-    console.log("parent component did mount called");
+    // console.log("parent component did mount called");
   }
 
   render() {
-    console.log("parent render called");
+    // console.log("parent render called");
     return (
       <div className="m-4 p-4">
         <h1>About US</h1>
