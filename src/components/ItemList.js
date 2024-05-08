@@ -17,6 +17,7 @@ const ItemList = ({ items }) => {
         const style = "m-[-10px] pl-8";
         return (
           <div
+            data-testid="foodItems"
             key={id}
             className="p-2 m-2 border-b-2 text-left flex justify-between"
           >
